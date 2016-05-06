@@ -13,12 +13,13 @@ namespace blink {
 
 DOMWindowWebCL::DOMWindowWebCL(LocalDOMWindow& window)
     : DOMWindowProperty(window.frame())
-    , m_window(window)
+    , m_window(&window)
 {
 }
 
 DEFINE_TRACE(DOMWindowWebCL)
 {
+    visitor->trace(m_window);
     HeapSupplement<LocalDOMWindow>::trace(visitor);
     DOMWindowProperty::trace(visitor);
 }
@@ -53,7 +54,7 @@ WebCL* DOMWindowWebCL::webcl(DOMWindow& window)
 
 WebCL* DOMWindowWebCL::webcl()
 {
-    if (!m_window.document() || !m_window.document()->page())
+    if (!m_window->document() || !m_window->document()->page())
         return nullptr;
 
     if (!m_webcl)

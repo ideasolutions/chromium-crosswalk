@@ -31,7 +31,7 @@ private:
     WebCL* webcl();
     static const char* supplementName();
 
-    LocalDOMWindow& m_window;
+    Member<LocalDOMWindow> m_window;
     RefPtr<WebCL> m_webcl;
 };
 
