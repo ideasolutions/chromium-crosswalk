@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
 * A wrapper around android.media.MediaPlayer that allows the native code to use it.
@@ -37,7 +38,7 @@ public class MediaPlayerBridge {
 
     public static class ResourceLoadingFilter {
         public boolean shouldOverrideResourceLoading(
-                MediaPlayer mediaPlayer, Context context, Uri uri) {
+                MediaPlayer mediaPlayer, Context context, Uri uri, Map<String, String> headers) {
             return false;
         }
     }
@@ -167,7 +168,7 @@ public class MediaPlayerBridge {
         try {
             if (sResourceLoadFilter != null &&
                     sResourceLoadFilter.shouldOverrideResourceLoading(
-                            getLocalPlayer(), context, uri)) {
+                            getLocalPlayer(), context, uri, headersMap)) {
                 return true;
             }
             getLocalPlayer().setDataSource(context, uri, headersMap);
